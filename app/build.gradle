@@ -5,6 +5,9 @@ apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 28
+    dataBinding {
+        enabled = true
+    }
     defaultConfig {
         applicationId "challenge.juanaso.com.iguanafixkotlin"
         minSdkVersion 15

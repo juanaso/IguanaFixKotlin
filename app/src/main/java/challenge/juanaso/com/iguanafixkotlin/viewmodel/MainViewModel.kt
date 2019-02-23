@@ -4,7 +4,7 @@ import android.arch.lifecycle.MutableLiveData
 import android.view.View
 import challenge.juanaso.com.iguanafixkotlin.model.User
 import challenge.juanaso.com.iguanafixkotlin.network.RetrofitWebService
-import io.reactivex.Observable
+import challenge.juanaso.com.iguanafixkotlin.ui.main.UserAdapter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
@@ -12,11 +12,15 @@ import javax.inject.Inject
 
 
 class MainViewModel : BaseViewModel() {
+
     @Inject
     lateinit var retrofitWebService: RetrofitWebService
 
     private lateinit var subscription: Disposable
 
+    val userAdapter: UserAdapter = UserAdapter()
+    val loadingVisibility: MutableLiveData<Int> = MutableLiveData()
+    val errorMessage:MutableLiveData<Int> = MutableLiveData()
     val errorClickListener = View.OnClickListener { loadPosts() }
 
     init{
@@ -24,7 +28,6 @@ class MainViewModel : BaseViewModel() {
     }
 
     private fun loadPosts(){
-
         subscription = retrofitWebService.getUsers()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -37,16 +40,16 @@ class MainViewModel : BaseViewModel() {
     }
 
     private fun onRetrievePostListStart(){
-
+        loadingVisibility.value = View.VISIBLE
+        errorMessage.value = null
     }
 
     private fun onRetrievePostListFinish(){
-
-
+        loadingVisibility.value = View.GONE
     }
 
     private fun onRetrievePostListSuccess(users:List<User>){
-
+        userAdapter.updateUsers(users)
     }
 
     private fun onRetrievePostListError(){
@@ -57,6 +60,5 @@ class MainViewModel : BaseViewModel() {
         super.onCleared()
         subscription.dispose()
     }
-
 }
 
