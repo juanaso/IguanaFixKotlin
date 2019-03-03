@@ -14,9 +14,8 @@ import android.view.View
 import android.view.ViewGroup
 import challenge.juanaso.com.iguanafixkotlin.R
 import challenge.juanaso.com.iguanafixkotlin.databinding.MainFragmentBinding
+import challenge.juanaso.com.iguanafixkotlin.di.ViewModelFactory
 import challenge.juanaso.com.iguanafixkotlin.viewmodel.MainViewModel
-
-
 
 class MainFragment : Fragment() {
 
@@ -31,7 +30,7 @@ class MainFragment : Fragment() {
                               savedInstanceState: Bundle?): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.main_fragment, container, false)
 
-        viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
+        viewModel =   ViewModelProviders.of(this, ViewModelFactory(this.activity!!)).get(MainViewModel::class.java)
         binding.userRecycler.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
         viewModel.errorMessage.observe(this, Observer {
             errorMessage -> if(errorMessage != null) showError(errorMessage) else hideError()
@@ -39,11 +38,6 @@ class MainFragment : Fragment() {
         binding.viewModel = viewModel
 
         return binding.getRoot();
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
     }
 
     private fun showError(@StringRes errorMessage:Int){

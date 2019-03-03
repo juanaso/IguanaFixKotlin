@@ -4,14 +4,17 @@ import android.arch.lifecycle.MutableLiveData
 import android.view.View
 import challenge.juanaso.com.iguanafixkotlin.model.User
 import challenge.juanaso.com.iguanafixkotlin.network.RetrofitWebService
+import challenge.juanaso.com.iguanafixkotlin.persistence.AppDatabase
+import challenge.juanaso.com.iguanafixkotlin.persistence.UserDao
 import challenge.juanaso.com.iguanafixkotlin.ui.main.UserAdapter
+import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 
-class MainViewModel : BaseViewModel() {
+class MainViewModel(private val appDatabase: AppDatabase) : BaseViewModel() {
 
     @Inject
     lateinit var retrofitWebService: RetrofitWebService
@@ -28,7 +31,18 @@ class MainViewModel : BaseViewModel() {
     }
 
     private fun loadPosts(){
-        subscription = retrofitWebService.getUsers()
+        var userDao = appDatabase.userDao()
+        subscription = Observable.fromCallable { userDao.all }
+                .concatMap {
+                    dbUserList ->
+                    if(dbUserList.isEmpty())
+                        retrofitWebService.getUsers().concatMap {
+                            apiUsers-> userDao.insertAll(apiUsers)
+                            Observable.just(apiUsers)
+                        }
+                    else
+                        Observable.just(dbUserList)
+                }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe { onRetrievePostListStart() }
