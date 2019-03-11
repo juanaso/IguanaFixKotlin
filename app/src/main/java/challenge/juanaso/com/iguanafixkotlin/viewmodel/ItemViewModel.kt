@@ -6,10 +6,12 @@ import challenge.juanaso.com.iguanafixkotlin.model.User
 class ItemViewModel: BaseViewModel() {
     private val name = MutableLiveData<String>()
     private val birthDay = MutableLiveData<String>()
+    private val photoUrl = MutableLiveData<String>()
 
     fun bind(user: User){
         name.value = user.fullName
         birthDay.value = user.getBirthdayFormated()
+        photoUrl.value = user.thumbnailUrl
     }
 
     fun getName():MutableLiveData<String>{
@@ -18,5 +20,9 @@ class ItemViewModel: BaseViewModel() {
 
     fun getBirthDay():MutableLiveData<String>{
         return birthDay
+    }
+
+    fun getPhotoUrl():MutableLiveData<String>{
+        return photoUrl
     }
 }
