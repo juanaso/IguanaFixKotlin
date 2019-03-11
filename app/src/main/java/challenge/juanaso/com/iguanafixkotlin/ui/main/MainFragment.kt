@@ -8,10 +8,11 @@ import android.os.Bundle
 import android.support.annotation.StringRes
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.support.v7.widget.SearchView
+import android.view.*
+import android.view.inputmethod.EditorInfo
 import challenge.juanaso.com.iguanafixkotlin.R
 import challenge.juanaso.com.iguanafixkotlin.databinding.MainFragmentBinding
 import challenge.juanaso.com.iguanafixkotlin.di.ViewModelFactory
@@ -37,6 +38,9 @@ class MainFragment : Fragment() {
         })
         binding.viewModel = viewModel
 
+        setHasOptionsMenu(true)
+        (activity as AppCompatActivity).supportActionBar!!.show()
+
         return binding.getRoot();
     }
 
@@ -50,4 +54,19 @@ class MainFragment : Fragment() {
         errorSnackbar?.dismiss()
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        inflater!!.inflate(R.menu.user_menu, menu)
+        val searchItem = menu!!.findItem(R.id.action_search)
+        val searchView = searchItem.actionView as SearchView
+        searchView.imeOptions = EditorInfo.IME_ACTION_DONE
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+            override fun onQueryTextChange(newText: String?): Boolean {
+                viewModel.userAdapter.filter.filter(newText)
+                return false
+            }
+        })
+    }
 }
