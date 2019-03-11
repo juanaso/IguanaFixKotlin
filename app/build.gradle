@@ -10,7 +10,7 @@ android {
     }
     defaultConfig {
         applicationId "challenge.juanaso.com.iguanafixkotlin"
-        minSdkVersion 15
+        minSdkVersion 19
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -68,5 +68,5 @@ dependencies {
 
         //Glide
         implementation 'com.github.bumptech.glide:glide:4.8.0'
-        //implementation 'com.github.2coffees1team:GlideToVectorYou:v1.0'
+        implementation 'com.github.2coffees1team:GlideToVectorYou:v1.0'
 }

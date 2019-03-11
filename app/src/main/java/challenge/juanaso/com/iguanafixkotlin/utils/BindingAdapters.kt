@@ -3,6 +3,7 @@ package challenge.juanaso.com.iguanafixkotlin.utils
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.Observer
 import android.databinding.BindingAdapter
+import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.RecyclerView
 import android.view.View
@@ -12,6 +13,7 @@ import challenge.juanaso.com.iguanafixkotlin.utils.extension.getParentActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import challenge.juanaso.com.iguanafixkotlin.R
+import com.github.twocoffeesoneteam.glidetovectoryou.GlideToVectorYou
 
 
 @BindingAdapter("mutableVisibility")
@@ -41,8 +43,9 @@ fun setPhotoUrl(view: ImageView, getPhotoUrl: MutableLiveData<String>?) {
                         .placeholder(R.mipmap.ic_launcher_round)
                         .error(R.mipmap.ic_launcher_round)
                 Glide.with(parentActivity).load(value).apply(options).into(view)
+            }else {
+                GlideToVectorYou.justLoadImage(parentActivity, Uri.parse(value), view)
             }
-
 
             //view.text = value?:""
         })
