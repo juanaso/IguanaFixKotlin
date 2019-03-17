@@ -56,3 +56,39 @@ fun setUserPhones(view: TextView, user: MutableLiveData<User>?) {
         })
     }
 }
+
+@BindingAdapter("userAddresses")
+fun setUserAddresses(view: TextView, user: MutableLiveData<User>?) {
+    val parentActivity: AppCompatActivity? = view.getParentActivity()
+    if (parentActivity != null) {
+        user?.observe(parentActivity, Observer { value ->
+            val address = user.value?.addresses!![0]
+            val stringBuilder = StringBuilder()
+            if (address.home != null) {
+                stringBuilder.append(address.getHomeDetailed())
+                stringBuilder.append(System.getProperty("line.separator"))
+            }
+            if (address.work != null)
+                stringBuilder.append(address.getWorkDetailed())
+            view.text = stringBuilder.toString()
+        })
+    }
+}
+
+    @BindingAdapter("userCubeVarious")
+    fun setUserCubeVarious(view: TextView, user: MutableLiveData<User>?) {
+        val parentActivity: AppCompatActivity? = view.getParentActivity()
+        if (parentActivity != null) {
+            user?.observe(parentActivity, Observer { value ->
+                val address = user.value?.addresses!![0]
+                val stringBuilder = StringBuilder()
+                stringBuilder.append(user.value?.getIdFormated())
+                stringBuilder.append(System.getProperty("line.separator"))
+                stringBuilder.append(user.value?.getBirthdayFormated())
+                stringBuilder.append(System.getProperty("line.separator"))
+                stringBuilder.append(user.value?.getCreatedDateFormated())
+                view.text = stringBuilder.toString()
+            })
+        }
+    }
+

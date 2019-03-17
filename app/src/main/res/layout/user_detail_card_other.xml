@@ -30,7 +30,7 @@
                 android:textColor="#ab050505"
                 android:layout_toEndOf="@+id/user_detail_card_other_image"
                 android:layout_width="wrap_content"
-                app:userName="@{viewModel.getCurrentUser()}"
+                app:userCubeVarious="@{viewModel.getCurrentUser()}"
                 android:layout_height="wrap_content"/>
     </RelativeLayout>
 </android.support.v7.widget.CardView>

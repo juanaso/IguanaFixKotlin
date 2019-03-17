@@ -50,7 +50,6 @@ class DetailViewModel(private val id :String): BaseViewModel(){
         loadingVisibility.value = View.GONE
     }
 
-
     override fun onCleared() {
         super.onCleared()
         subscription.dispose()
