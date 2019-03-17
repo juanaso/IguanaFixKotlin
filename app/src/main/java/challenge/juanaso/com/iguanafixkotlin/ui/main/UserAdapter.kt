@@ -11,10 +11,9 @@ import challenge.juanaso.com.iguanafixkotlin.model.User
 import challenge.juanaso.com.iguanafixkotlin.viewmodel.ItemViewModel
 import challenge.juanaso.com.iguanafixkotlin.R
 import java.util.ArrayList
-import javax.inject.Singleton
 
 
-class UserAdapter: RecyclerView.Adapter<UserAdapter.ViewHolder>(), Filterable {
+class UserAdapter (val clickListener: (User) -> Unit): RecyclerView.Adapter<UserAdapter.ViewHolder>(), Filterable {
     private lateinit var users:List<User>
     private lateinit var usersFull:List<User>
 
@@ -24,7 +23,7 @@ class UserAdapter: RecyclerView.Adapter<UserAdapter.ViewHolder>(), Filterable {
     }
 
     override fun onBindViewHolder(holder: UserAdapter.ViewHolder, position: Int) {
-        holder.bind(users[position])
+        holder.bind(users[position],clickListener)
     }
 
     override fun getItemCount(): Int {
@@ -40,9 +39,11 @@ class UserAdapter: RecyclerView.Adapter<UserAdapter.ViewHolder>(), Filterable {
     class ViewHolder(private val binding: UserItemBinding): RecyclerView.ViewHolder(binding.root){
         private val viewModel = ItemViewModel()
 
-        fun bind(user: User){
+        fun bind(user: User, clickListener: (User) -> Unit){
             viewModel.bind(user)
             binding.viewModel = viewModel
+            binding.viewModel
+            binding.root.setOnClickListener { clickListener(user)}
         }
     }
 

@@ -13,6 +13,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.SearchView
 import android.view.*
 import android.view.inputmethod.EditorInfo
+import challenge.juanaso.com.iguanafixkotlin.MainActivity
 import challenge.juanaso.com.iguanafixkotlin.R
 import challenge.juanaso.com.iguanafixkotlin.databinding.MainFragmentBinding
 import challenge.juanaso.com.iguanafixkotlin.di.ViewModelFactory
@@ -27,6 +28,7 @@ class MainFragment : Fragment() {
     companion object {
         fun newInstance() = MainFragment()
     }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.main_fragment, container, false)
@@ -38,10 +40,13 @@ class MainFragment : Fragment() {
         })
         binding.viewModel = viewModel
 
+        viewModel.userToShowDetail.observe(this, Observer {
+            ((activity)as MainActivity).navigateToUserDetail(it?.id!!)
+        })
         setHasOptionsMenu(true)
         (activity as AppCompatActivity).supportActionBar!!.show()
 
-        return binding.getRoot();
+        return binding.getRoot()
     }
 
     private fun showError(@StringRes errorMessage:Int){

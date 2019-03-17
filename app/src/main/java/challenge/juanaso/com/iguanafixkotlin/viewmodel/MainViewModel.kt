@@ -2,6 +2,7 @@ package challenge.juanaso.com.iguanafixkotlin.viewmodel
 
 import android.arch.lifecycle.MutableLiveData
 import android.view.View
+import android.widget.Toast
 import challenge.juanaso.com.iguanafixkotlin.model.User
 import challenge.juanaso.com.iguanafixkotlin.network.RetrofitWebService
 import challenge.juanaso.com.iguanafixkotlin.persistence.AppDatabase
@@ -13,7 +14,6 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-
 class MainViewModel(private val appDatabase: AppDatabase) : BaseViewModel() {
 
     @Inject
@@ -21,9 +21,10 @@ class MainViewModel(private val appDatabase: AppDatabase) : BaseViewModel() {
 
     private lateinit var subscription: Disposable
 
-    val userAdapter: UserAdapter = UserAdapter()
+    val userAdapter: UserAdapter = UserAdapter( { user : User -> onItemClick(user) })
     val loadingVisibility: MutableLiveData<Int> = MutableLiveData()
     val errorMessage:MutableLiveData<Int> = MutableLiveData()
+    val userToShowDetail:MutableLiveData<User> = MutableLiveData()
     val errorClickListener = View.OnClickListener { loadPosts() }
 
     init{
@@ -67,12 +68,15 @@ class MainViewModel(private val appDatabase: AppDatabase) : BaseViewModel() {
     }
 
     private fun onRetrievePostListError(){
-
     }
 
     override fun onCleared() {
         super.onCleared()
         subscription.dispose()
+    }
+
+    private fun onItemClick(user: User){
+        userToShowDetail.value = user
     }
 }
 
