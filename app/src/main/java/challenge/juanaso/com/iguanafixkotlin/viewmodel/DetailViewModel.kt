@@ -1,5 +1,6 @@
 package challenge.juanaso.com.iguanafixkotlin.viewmodel
 
+import android.arch.lifecycle.MutableLiveData
 import android.view.View
 import challenge.juanaso.com.iguanafixkotlin.model.User
 import challenge.juanaso.com.iguanafixkotlin.network.RetrofitWebService
@@ -12,7 +13,12 @@ class DetailViewModel(private val id :String): BaseViewModel(){
 
     @Inject
     lateinit var retrofitWebService: RetrofitWebService
+
     private lateinit var subscription: Disposable
+
+    val currentUser: MutableLiveData<User> = MutableLiveData()
+
+    val photoUrl: MutableLiveData<String> = MutableLiveData()
 
     init {
         loadUser()
@@ -37,7 +43,7 @@ class DetailViewModel(private val id :String): BaseViewModel(){
     }
 
     private fun onRetrievePostListSuccess(user: User){
-
+        photoUrl.value = user.photoUrl
     }
 
     private fun onRetrievePostListError(){

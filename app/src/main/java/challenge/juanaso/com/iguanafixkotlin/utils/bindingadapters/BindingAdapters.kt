@@ -1,4 +1,4 @@
-package challenge.juanaso.com.iguanafixkotlin.utils
+package challenge.juanaso.com.iguanafixkotlin.utils.bindingadapters
 
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.Observer
