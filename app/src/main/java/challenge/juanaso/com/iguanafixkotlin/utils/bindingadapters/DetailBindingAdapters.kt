@@ -4,6 +4,7 @@ import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.Observer
 import android.databinding.BindingAdapter
 import android.net.Uri
+import android.support.v4.widget.SwipeRefreshLayout
 import challenge.juanaso.com.iguanafixkotlin.R
 import android.support.v7.app.AppCompatActivity
 import android.widget.ImageView
@@ -75,20 +76,28 @@ fun setUserAddresses(view: TextView, user: MutableLiveData<User>?) {
     }
 }
 
-    @BindingAdapter("userCubeVarious")
-    fun setUserCubeVarious(view: TextView, user: MutableLiveData<User>?) {
-        val parentActivity: AppCompatActivity? = view.getParentActivity()
-        if (parentActivity != null) {
-            user?.observe(parentActivity, Observer { value ->
-                val address = user.value?.addresses!![0]
-                val stringBuilder = StringBuilder()
-                stringBuilder.append(user.value?.getIdFormated())
-                stringBuilder.append(System.getProperty("line.separator"))
-                stringBuilder.append(user.value?.getBirthdayFormated())
-                stringBuilder.append(System.getProperty("line.separator"))
-                stringBuilder.append(user.value?.getCreatedDateFormated())
-                view.text = stringBuilder.toString()
-            })
-        }
+@BindingAdapter("userOtherInfo")
+fun setUserOtherInfo(view: TextView, user: MutableLiveData<User>?) {
+    val parentActivity: AppCompatActivity? = view.getParentActivity()
+    if (parentActivity != null) {
+        user?.observe(parentActivity, Observer { value ->
+            val address = user.value?.addresses!![0]
+            val stringBuilder = StringBuilder()
+            stringBuilder.append(user.value?.getIdFormated())
+            stringBuilder.append(System.getProperty("line.separator"))
+            stringBuilder.append(user.value?.getBirthdayFormated())
+            stringBuilder.append(System.getProperty("line.separator"))
+            stringBuilder.append(user.value?.getCreatedDateFormated())
+            view.text = stringBuilder.toString()
+        })
     }
+}
+
+@BindingAdapter("swipeToRefreshVisibility")
+fun setSwipeToRefreshVisibility(view : SwipeRefreshLayout, swipeToRefreshVisibility: MutableLiveData<Boolean>?){
+    val parentActivity:AppCompatActivity? = view.getParentActivity()
+    if(parentActivity != null) {
+        swipeToRefreshVisibility?.observe(parentActivity, Observer { value -> view.isRefreshing = value!!})
+    }
+}
 

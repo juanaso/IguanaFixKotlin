@@ -10,6 +10,7 @@
     <android.support.v4.widget.SwipeRefreshLayout
     android:id="@+id/detail_swipeRefresh"
     android:layout_width="match_parent"
+    app:swipeToRefreshVisibility="@{viewModel.getSwipeToRefreshVisibility()}"
     android:layout_height="match_parent">
     <android.support.design.widget.CoordinatorLayout
         android:id="@+id/main_content"

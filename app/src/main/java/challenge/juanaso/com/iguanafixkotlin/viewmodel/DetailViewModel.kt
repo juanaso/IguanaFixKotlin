@@ -18,11 +18,12 @@ class DetailViewModel(private val id :String): BaseViewModel(){
 
     val currentUser: MutableLiveData<User> = MutableLiveData()
     val loadingVisibility: MutableLiveData<Int> = MutableLiveData()
+    val swipeToRefreshVisibility: MutableLiveData<Boolean> = MutableLiveData()
     init {
         loadUser()
     }
 
-    private fun loadUser() {
+    fun loadUser() {
         subscription = retrofitWebService.getUser(id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -40,6 +41,7 @@ class DetailViewModel(private val id :String): BaseViewModel(){
 
     private fun onRetrievePostListFinish(){
         loadingVisibility.value = View.GONE
+        swipeToRefreshVisibility.value = false
     }
 
     private fun onRetrievePostListSuccess(user: User){
@@ -48,6 +50,7 @@ class DetailViewModel(private val id :String): BaseViewModel(){
 
     private fun onRetrievePostListError(){
         loadingVisibility.value = View.GONE
+        swipeToRefreshVisibility.value = false
     }
 
     override fun onCleared() {

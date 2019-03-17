@@ -18,6 +18,7 @@ import challenge.juanaso.com.iguanafixkotlin.databinding.MainFragmentBinding
 import challenge.juanaso.com.iguanafixkotlin.di.ViewModelFactory
 import challenge.juanaso.com.iguanafixkotlin.utils.USER_ID
 import challenge.juanaso.com.iguanafixkotlin.viewmodel.MainViewModel
+import kotlinx.android.synthetic.main.main_fragment.*
 
 class MainFragment : Fragment() {
 
@@ -29,10 +30,19 @@ class MainFragment : Fragment() {
         fun newInstance() = MainFragment()
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        (activity as AppCompatActivity).setSupportActionBar(toolbar)
+        toolbar.inflateMenu(R.menu.user_menu)
+        this.setHasOptionsMenu(true)
+
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.main_fragment, container, false)
 
+        this.setHasOptionsMenu(true)
         viewModel =   ViewModelProviders.of(this, ViewModelFactory(this.activity!!)).get(MainViewModel::class.java)
         binding.userRecycler.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
         viewModel.errorMessage.observe(this, Observer {
@@ -41,14 +51,14 @@ class MainFragment : Fragment() {
         binding.viewModel = viewModel
 
         viewModel.userToShowDetail.observe(this, Observer {
-            val bundle = Bundle()
-            bundle.putString(USER_ID, it?.id!!)
-            ((activity)as MainActivity).navigateToUserDetail(bundle)
+            if(it!=null){
+                val bundle = Bundle()
+                bundle.putString(USER_ID, it.id!!)
+                ((activity)as MainActivity).navigateToUserDetail(bundle)
+                viewModel.userToShowDetail.value = null;
+            }
         })
-        setHasOptionsMenu(true)
-        (activity as AppCompatActivity).supportActionBar!!.show()
-
-        return binding.getRoot()
+        return binding.root
     }
 
     private fun showError(@StringRes errorMessage:Int){

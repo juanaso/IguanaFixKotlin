@@ -19,7 +19,7 @@ fun View.getParentActivity(): AppCompatActivity?{
 }
 
 inline fun FragmentManager.inTransaction(func: FragmentTransaction.() -> FragmentTransaction) {
-    beginTransaction().func().commit()
+    beginTransaction().func().addToBackStack(null).commit()
 }
 
 fun AppCompatActivity.replaceFragment(fragment: Fragment, frameId: Int) {

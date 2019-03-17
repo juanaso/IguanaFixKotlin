@@ -24,5 +24,4 @@ class MainActivity : AppCompatActivity() {
         detailFragment.arguments = bundle
         replaceFragment(detailFragment, R.id.container)
     }
-
 }
