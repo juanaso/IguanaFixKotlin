@@ -17,9 +17,7 @@ class DetailViewModel(private val id :String): BaseViewModel(){
     private lateinit var subscription: Disposable
 
     val currentUser: MutableLiveData<User> = MutableLiveData()
-
-    val photoUrl: MutableLiveData<String> = MutableLiveData()
-
+    val loadingVisibility: MutableLiveData<Int> = MutableLiveData()
     init {
         loadUser()
     }
@@ -37,17 +35,21 @@ class DetailViewModel(private val id :String): BaseViewModel(){
     }
 
     private fun onRetrievePostListStart(){
+        loadingVisibility.value = View.VISIBLE
     }
 
     private fun onRetrievePostListFinish(){
+        loadingVisibility.value = View.GONE
     }
 
     private fun onRetrievePostListSuccess(user: User){
-        photoUrl.value = user.photoUrl
+        currentUser.value = user
     }
 
     private fun onRetrievePostListError(){
+        loadingVisibility.value = View.GONE
     }
+
 
     override fun onCleared() {
         super.onCleared()

@@ -37,7 +37,7 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="256dp"
-                    app:userPhotoUrl="@{viewModel.getPhotoUrl()}"
+                    app:userPhotoUrl="@{viewModel.getCurrentUser()}"
                     android:scaleType="centerCrop"
                     app:layout_collapseMode="parallax"
                     android:id="@+id/activity_user_detail_imageView"/>
@@ -61,6 +61,7 @@
                     android:layout_height="wrap_content"
                     android:indeterminate="true"
                     android:max="100"
+                    app:mutableVisibility="@{viewModel.getLoadingVisibility()}"
                     android:backgroundTint="@color/design_default_color_primary"
                     android:layout_below="@+id/framelauout"
                     android:indeterminateTint="#1a09d6"

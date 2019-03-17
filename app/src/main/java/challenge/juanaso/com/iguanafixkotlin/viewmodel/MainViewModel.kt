@@ -68,6 +68,7 @@ class MainViewModel(private val appDatabase: AppDatabase) : BaseViewModel() {
     }
 
     private fun onRetrievePostListError(){
+        loadingVisibility.value = View.GONE
     }
 
     override fun onCleared() {

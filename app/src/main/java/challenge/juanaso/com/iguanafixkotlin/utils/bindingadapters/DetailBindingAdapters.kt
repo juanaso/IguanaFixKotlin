@@ -14,19 +14,18 @@ import com.bumptech.glide.request.RequestOptions
 import com.github.twocoffeesoneteam.glidetovectoryou.GlideToVectorYou
 
 @BindingAdapter("userPhotoUrl")
-fun setUserPhotoUrl(view: ImageView, photoUrl: MutableLiveData<String>?) {
+fun setUserPhotoUrl(view: ImageView, user: MutableLiveData<User>?) {
     val parentActivity: AppCompatActivity? = view.getParentActivity()
-    val s = photoUrl?.value
     if(parentActivity != null) {
-        photoUrl?.observe(parentActivity, Observer { value ->
-            if (!photoUrl.value!!.endsWith(".svg")) {
+        user?.observe(parentActivity, Observer { value ->
+            if (!user.value?.photoUrl!!.endsWith(".svg")) {
                 val options = RequestOptions()
                         .centerCrop()
                         .placeholder(R.mipmap.ic_launcher_round)
                         .error(R.mipmap.ic_launcher_round)
-                Glide.with(parentActivity).load(value).apply(options).into(view)
+                Glide.with(parentActivity).load(value?.photoUrl).apply(options).into(view)
             }else {
-                GlideToVectorYou.justLoadImage(parentActivity, Uri.parse(photoUrl.value), view)
+                GlideToVectorYou.justLoadImage(parentActivity, Uri.parse(user.value?.photoUrl), view)
             }
         })
     }
