@@ -66,9 +66,12 @@
                     android:layout_below="@+id/framelauout"
                     android:indeterminateTint="#1a09d6"
                     android:layout_marginTop="-7dp"/>
-                <include layout="@layout/user_detail_card_number"/>
-                <include layout="@layout/user_detail_card_addresses"/>
-                <include layout="@layout/user_detail_card_other"/>
+                <include layout="@layout/user_detail_card_number"
+                    app:viewModel="@{viewModel}"/>
+                <include layout="@layout/user_detail_card_addresses"
+                    app:viewModel="@{viewModel}"/>
+                <include layout="@layout/user_detail_card_other"
+                    app:viewModel="@{viewModel}"/>
             </LinearLayout>
         </android.support.design.widget.AppBarLayout>
     </android.support.design.widget.CoordinatorLayout>
