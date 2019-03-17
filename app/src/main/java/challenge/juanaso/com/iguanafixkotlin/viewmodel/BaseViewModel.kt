@@ -22,6 +22,7 @@ abstract class BaseViewModel: ViewModel(){
     private fun inject() {
         when (this) {
             is MainViewModel -> injector.inject(this)
+            is DetailViewModel -> injector.inject(this)
         }
     }
 }

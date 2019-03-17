@@ -1,6 +1,5 @@
 package challenge.juanaso.com.iguanafixkotlin.ui.main
 
-import android.app.Activity
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
@@ -17,6 +16,7 @@ import challenge.juanaso.com.iguanafixkotlin.MainActivity
 import challenge.juanaso.com.iguanafixkotlin.R
 import challenge.juanaso.com.iguanafixkotlin.databinding.MainFragmentBinding
 import challenge.juanaso.com.iguanafixkotlin.di.ViewModelFactory
+import challenge.juanaso.com.iguanafixkotlin.utils.USER_ID
 import challenge.juanaso.com.iguanafixkotlin.viewmodel.MainViewModel
 
 class MainFragment : Fragment() {
@@ -41,7 +41,9 @@ class MainFragment : Fragment() {
         binding.viewModel = viewModel
 
         viewModel.userToShowDetail.observe(this, Observer {
-            ((activity)as MainActivity).navigateToUserDetail(it?.id!!)
+            val bundle = Bundle()
+            bundle.putString(USER_ID, it?.id!!)
+            ((activity)as MainActivity).navigateToUserDetail(bundle)
         })
         setHasOptionsMenu(true)
         (activity as AppCompatActivity).supportActionBar!!.show()

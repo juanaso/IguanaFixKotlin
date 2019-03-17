@@ -16,5 +16,5 @@ interface RetrofitWebService {
     fun getUsers():Observable<List<User>>
 
     @GET("/contacts/{id}")
-    fun user(@Path("id") user: String): Observable<User>
+    fun getUser(@Path("id") user: String): Observable<User>
 }

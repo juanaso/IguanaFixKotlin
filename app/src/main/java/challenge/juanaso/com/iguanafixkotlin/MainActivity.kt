@@ -5,10 +5,7 @@ import android.os.Bundle
 import challenge.juanaso.com.iguanafixkotlin.ui.main.MainFragment
 import challenge.juanaso.com.iguanafixkotlin.R
 import challenge.juanaso.com.iguanafixkotlin.ui.detail.DetailFragment
-import challenge.juanaso.com.iguanafixkotlin.utils.extension.inTransaction
 import challenge.juanaso.com.iguanafixkotlin.utils.extension.replaceFragment
-import io.reactivex.internal.util.BackpressureHelper.add
-
 
 class MainActivity : AppCompatActivity() {
 
@@ -22,8 +19,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun navigateToUserDetail(id:String){
-        replaceFragment(DetailFragment.newInstance(), R.id.container)
+    fun navigateToUserDetail(bundle: Bundle){
+        val detailFragment = DetailFragment.newInstance()
+        detailFragment.arguments = bundle
+        replaceFragment(detailFragment, R.id.container)
     }
 
 }

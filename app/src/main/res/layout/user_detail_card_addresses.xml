@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:xmnls="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_margin="10dp"
+        android:elevation="20dp"
+        xmnls:cardCornerRadius="10dp">
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <ImageView
+                android:id="@+id/user_detail_card_addresses_image"
+                android:layout_centerVertical="true"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/ic_home"/>
+        <TextView
+                android:layout_centerVertical="true"
+                android:paddingTop="10dp"
+                android:id="@+id/user_detail_card_addresses_textView"
+                android:textColor="#ab050505"
+                android:layout_toEndOf="@+id/user_detail_card_addresses_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+    </RelativeLayout>
+</android.support.v7.widget.CardView>
