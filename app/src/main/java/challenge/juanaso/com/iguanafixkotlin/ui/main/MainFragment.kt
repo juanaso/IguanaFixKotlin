@@ -32,9 +32,16 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setSwipeToRefresh()
         (activity as AppCompatActivity).setSupportActionBar(toolbar)
         toolbar.inflateMenu(R.menu.user_menu)
         this.setHasOptionsMenu(true)
+        viewModel.loadPosts()
+
+    }
+
+    private fun setSwipeToRefresh() {
+        main_swipeRefresh.setOnRefreshListener{viewModel.loadPosts()}
 
     }
 

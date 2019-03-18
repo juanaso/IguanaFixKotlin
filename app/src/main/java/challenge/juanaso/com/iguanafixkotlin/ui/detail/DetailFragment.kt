@@ -53,7 +53,6 @@ class DetailFragment : Fragment(), FragmentManager.OnBackStackChangedListener,Ap
 
     private fun setToolbar() {
         appBar.addOnOffsetChangedListener(this)
-        (activity as AppCompatActivity).supportActionBar!!.hide()
         activity_user_detail_toolbar.navigationIcon = ContextCompat.getDrawable(activity!!.applicationContext, R.drawable.ic_arrow_back)
         activity_user_detail_toolbar.setNavigationOnClickListener {
             activity!!.onBackPressed()
