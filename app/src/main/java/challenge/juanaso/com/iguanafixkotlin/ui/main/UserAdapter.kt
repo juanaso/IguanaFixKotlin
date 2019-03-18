@@ -31,9 +31,18 @@ class UserAdapter (val clickListener: (User) -> Unit): RecyclerView.Adapter<User
     }
 
     fun updateUsers(users:List<User>){
+        setUserIndex(users)
         this.users = users
         this.usersFull = users
         notifyDataSetChanged()
+    }
+
+    private fun setUserIndex(users: List<User>) {
+        var index = 1
+        for(user:User in users){
+            user.index = index
+            index++
+        }
     }
 
     class ViewHolder(private val binding: UserItemBinding): RecyclerView.ViewHolder(binding.root){

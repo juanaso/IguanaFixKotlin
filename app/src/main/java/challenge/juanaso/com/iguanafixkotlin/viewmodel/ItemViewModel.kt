@@ -7,11 +7,17 @@ class ItemViewModel: BaseViewModel() {
     private val name = MutableLiveData<String>()
     private val birthDay = MutableLiveData<String>()
     private val photoUrl = MutableLiveData<String>()
+    private val index = MutableLiveData<String>()
 
     fun bind(user: User){
         name.value = user.fullName
         birthDay.value = user.getBirthdayFormated()
         photoUrl.value = user.thumbnailUrl
+        index.value = user.index.toString()
+    }
+
+    fun getIndex():MutableLiveData<String>{
+        return index
     }
 
     fun getName():MutableLiveData<String>{
@@ -25,4 +31,6 @@ class ItemViewModel: BaseViewModel() {
     fun getPhotoUrl():MutableLiveData<String>{
         return photoUrl
     }
+
+
 }

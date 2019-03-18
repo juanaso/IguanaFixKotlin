@@ -46,8 +46,6 @@ fun setPhotoUrl(view: ImageView, getPhotoUrl: MutableLiveData<String>?) {
             }else {
                 GlideToVectorYou.justLoadImage(parentActivity, Uri.parse(value), view)
             }
-
-            //view.text = value?:""
         })
     }
 }
