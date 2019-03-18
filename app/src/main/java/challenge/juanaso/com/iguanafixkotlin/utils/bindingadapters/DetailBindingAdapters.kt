@@ -4,6 +4,7 @@ import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.Observer
 import android.databinding.BindingAdapter
 import android.net.Uri
+import android.support.design.widget.CollapsingToolbarLayout
 import android.support.v4.widget.SwipeRefreshLayout
 import challenge.juanaso.com.iguanafixkotlin.R
 import android.support.v7.app.AppCompatActivity
@@ -83,12 +84,22 @@ fun setUserOtherInfo(view: TextView, user: MutableLiveData<User>?) {
         user?.observe(parentActivity, Observer { value ->
             val address = user.value?.addresses!![0]
             val stringBuilder = StringBuilder()
-            stringBuilder.append(user.value?.getIdFormated())
+            stringBuilder.append(value?.getIdFormated())
             stringBuilder.append(System.getProperty("line.separator"))
-            stringBuilder.append(user.value?.getBirthdayFormated())
+            stringBuilder.append(value?.getBirthdayFormated())
             stringBuilder.append(System.getProperty("line.separator"))
-            stringBuilder.append(user.value?.getCreatedDateFormated())
+            stringBuilder.append(value?.getCreatedDateFormated())
             view.text = stringBuilder.toString()
+        })
+    }
+}
+
+@BindingAdapter("collapsingToolbarTittle")
+fun setCollapsingToolbarTittle(view:CollapsingToolbarLayout, user: MutableLiveData<User>?){
+    val parentActivity:AppCompatActivity? = view.getParentActivity()
+    if(parentActivity!=null){
+        user?.observe(parentActivity,Observer{ value ->
+            view.title = value?.fullName
         })
     }
 }
